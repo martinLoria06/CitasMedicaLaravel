@@ -11,12 +11,12 @@
       </a>
     </li>
     <li class="nav-item">
-      <a class="nav-link " href="./examples/maps.html">
+      <a class="nav-link " href="{{route('medicos.index')}}">
         <i class="fas fa-stethoscope text-info"></i> Médicos
       </a>
     </li>
     <li class="nav-item">
-      <a class="nav-link " href="./examples/profile.html">
+      <a class="nav-link " href="{{route('pacientes.index')}}">
         <i class="fas fa-bed text-warning"></i> Pacientes
       </a>
     </li>

@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\DoctorController;
+use App\Http\Controllers\PatientController;
 use App\Http\Controllers\SpecialtyController;
 use Illuminate\Support\Facades\Route;
 
@@ -29,3 +31,9 @@ Route::get('/especialidades/{specialty}/editar',[SpecialtyController::class, 'ed
 Route::post('/especialidades',[SpecialtyController::class, 'sendData'])->name('especialidades.senData');
 Route::put('/especialidades/{specialty}',[SpecialtyController::class, 'update'])->name('especialidades.update');
 Route::delete('/especialidades/{specialty}',[SpecialtyController::class, 'destroy'])->name('especialidades.destroy');
+
+//Rutas de doctores
+Route::resource('/medicos',DoctorController::class);
+
+//Rutas de Pacientes
+Route::resource('/pacientes',PatientController::class);
