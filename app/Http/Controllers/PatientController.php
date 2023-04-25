@@ -12,7 +12,7 @@ class PatientController extends Controller
      */
     public function index()
     {
-        $patients = User::all();
+        $patients = User::patients()->get();
         return view('patients.index', compact('patients'));
     }
 
