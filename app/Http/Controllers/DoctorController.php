@@ -44,7 +44,7 @@ class DoctorController extends Controller
             'email.required' => 'El correo electronico es obligatorio',
             'email.email' => 'Ingresa una direccion de correo electronico valido',
             'cedula.required' => 'La cedula es obligatoria',
-            'cedula.digits' => 'La cedula debe de tener al menis 10 caracteres',
+            'cedula.digits' => 'La cedula debe de tener al menos 10 caracteres',
             'address.min' => 'La direccion debe tener al menos 6 caracteres',
             'phone.required' => 'El numero de telefono es obligatorio'
         ];
