@@ -39,12 +39,12 @@ class DoctorController extends Controller
         ];
 
         $messages = [
-            'name.required' => 'El nombre es requedo',
+            'name.required' => 'El nombre del médico es requerido',
             'name.min' => 'El nombre del médico debe tener mas de 3 caracteres',
             'email.required' => 'El correo electronico es obligatorio',
             'email.email' => 'Ingresa una direccion de correo electronico valido',
             'cedula.required' => 'La cedula es obligatoria',
-            'cedula.digits' => 'La cedula debe de tener al menis 6 caracteres',
+            'cedula.digits' => 'La cedula debe de tener al menis 10 caracteres',
             'address.min' => 'La direccion debe tener al menos 6 caracteres',
             'phone.required' => 'El numero de telefono es obligatorio'
         ];
@@ -101,7 +101,7 @@ class DoctorController extends Controller
             'email.required' => 'El correo electronico es obligatorio',
             'email.email' => 'Ingresa una direccion de correo electronico valido',
             'cedula.required' => 'La cedula es obligatoria',
-            'cedula.digits' => 'La cedula debe de tener al menis 6 caracteres',
+            'cedula.digits' => 'La cedula debe de tener al menis 10 caracteres',
             'address.min' => 'La direccion debe tener al menos 6 caracteres',
             'phone.required' => 'El numero de telefono es obligatorio'
         ];

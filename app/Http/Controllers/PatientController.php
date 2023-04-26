@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PatientRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -27,9 +28,17 @@ class PatientController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(PatientRequest $request)
     {
-        //
+        User::create(
+            $request->only('name','email','cedula','address','phone')
+            + [
+                'role'=>'Paciente',
+                'password' => bcrypt($request->password)
+            ]
+        );
+
+        return redirect()->route('pacientes.index')->with('success','El paciente se ha creado correctamente');
     }
 
     /**
@@ -45,15 +54,27 @@ class PatientController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $patient = User::patients()->findOrFail($id);
+        return view('patients.edit',compact('patient'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(PatientRequest $request, string $id)
     {
-        //
+        $patient = User::patients()->findOrFail($id);
+        $data = $request->only('name','email','cedula','address','phone');
+        $password = $request->password;
+
+        if($password) {
+            $data['password'] = bcrypt($password);
+        }
+
+        $patient ->fill($data);
+        $patient->save();
+
+        return redirect()->route('pacientes.index')->with('success','La informacion del paciente se ha actulizado correctamente');
     }
 
     /**
@@ -61,6 +82,10 @@ class PatientController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $patient  = User::patients()->findOrFail($id);
+        $patientName = $patient->name;
+        $patient->delete();
+
+        return redirect()->route('pacientes.index')->with('success',"El paciente $patientName se elimino correctamente");
     }
 }
