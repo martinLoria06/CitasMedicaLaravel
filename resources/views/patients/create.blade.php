@@ -36,8 +36,8 @@
             </div>
 
             <div class="form-group">
-                <label for="email">Cédula</label>
-                <input type="email" name="email" id="email" class="form-control" value="{{old('email')}}">
+                <label for="cedula">Cédula</label>
+                <input type="cedula" name="cedula" id="cedula" class="form-control" value="{{old('cedula')}}">
             </div>
 
             <div class="form-group">
