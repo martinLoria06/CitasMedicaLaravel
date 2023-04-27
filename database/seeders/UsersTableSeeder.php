@@ -24,6 +24,22 @@ class UsersTableSeeder extends Seeder
                 'role' => 'admin',
             ]);
 
+            User::create([
+                'name' => 'Paciente1',
+                'email' => 'paciente1@gmail.com',
+                'email_verified_at' => now(),
+                'password' => bcrypt('12345678'), // password
+                'role' => 'Paciente',
+            ]);
+
+            User::create([
+                'name' => 'Medico1',
+                'email' => 'medico1@gmail.com',
+                'email_verified_at' => now(),
+                'password' => bcrypt('12345678'), // password
+                'role' => 'Doctor',
+            ]);
+
             User::factory()
             ->count(50)
             ->create();
