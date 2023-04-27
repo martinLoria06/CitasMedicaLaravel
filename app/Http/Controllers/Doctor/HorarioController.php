@@ -9,22 +9,33 @@ use Illuminate\Http\Request;
 
 class HorarioController extends Controller
 {
+    private $days = ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado', 'Domingo'];
     public function edit() {
-        $days = ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado', 'Domingo'];
 
         $horarios = Horarios::where('user_id',auth()->id())->get();
-        $horarios->map(function($horarios){
-            $horarios->morning_start = (new Carbon($horarios->morning_start))->format('g:i A');
-            $horarios->morning_end = (new Carbon($horarios->morning_end))->format('g:i A');
-            $horarios->afternoon_start = (new Carbon($horarios->afternoon_start))->format('g:i A');
-            $horarios->afternoon_end = (new Carbon($horarios->afternoon_end))->format('g:i A');
-        });
+
+        if(count($horarios) > 0){
+            $horarios->map(function($horarios){
+                $horarios->morning_start = (new Carbon($horarios->morning_start))->format('g:i A');
+                $horarios->morning_end = (new Carbon($horarios->morning_end))->format('g:i A');
+                $horarios->afternoon_start = (new Carbon($horarios->afternoon_start))->format('g:i A');
+                $horarios->afternoon_end = (new Carbon($horarios->afternoon_end))->format('g:i A');
+            });
+        } else {
+            $horarios = collect();
+            for ($i=0; $i <7 ; $i++) {
+                $horarios->push(new Horarios());
+            }
+        }
+
         //  dd($horarios->toArray());
+        $days = $this->days;
 
         return view('horario',compact('days','horarios'));
     }
 
     public function store(Request $request) {
+        // dd($request->all());
         $active = $request->active ?: [] ;
         $morning_start = $request->morning_start;
         $morning_end = $request->morning_end;
@@ -33,7 +44,15 @@ class HorarioController extends Controller
 
 // dd($afternoon_end);
 
+        $errors = [];
+
         for ($i=0; $i <7; $i++) {
+            if($morning_start[$i] > $morning_end[$i]){
+                $errors[] = "Inconsistencias en el intervalo de las horas del turno de la mañana del dia " .$this->days[$i]. '.';
+            }
+            if($afternoon_start[$i] > $afternoon_end[$i]){
+                $errors[] = "Inconsistencias en el intervalo de las horas del turno de la tarde del dia " .$this->days[$i]. '.';
+            }
             Horarios::updateOrCreate(
 
                 [
@@ -52,8 +71,10 @@ class HorarioController extends Controller
             );
 
         }
-
-        return back();
+        if(count($errors) > 0){
+            return back()->with(compact('errors'));
+        }
+        return back()->with('success','Los cambios se han guardado correctamente');
 
     }
 }
