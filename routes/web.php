@@ -49,6 +49,7 @@ Route::group(['middleware' => 'doctor'], function () {
     ->controller(HorarioController::class)
     ->group(function(){
         Route::get('/','edit')->name('horario.edit');
+        Route::post('/','store')->name('horario.store');
 
     });
 });
