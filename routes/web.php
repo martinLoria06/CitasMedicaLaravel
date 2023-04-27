@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\DoctorController as AdminDoctorController;
 use App\Http\Controllers\Admin\PatientController as AdminPatientController;
 use App\Http\Controllers\Admin\SpecialtyController as AdminSpecialtyController;
+use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\Doctor\HorarioController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\PatientController;
@@ -53,3 +54,12 @@ Route::group(['middleware' => 'doctor'], function () {
 
     });
 });
+
+Route::get('/reservarcitas', [AppointmentController::class ,'create'])->name('appoinmente.create');
+Route::get('/miscitas', [AppointmentController::class ,'store'])->name('micitas.store');
+// Route::prefix('/reservarcitas')
+//     ->controller()
+//     ->group(function(){
+//         Route::get('/create','create')->name('appoinmente.create');
+//         Route::post('/create','create')->name('appoinmente.create');
+//     });
