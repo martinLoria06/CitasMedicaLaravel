@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\DoctorController as AdminDoctorController;
 use App\Http\Controllers\Admin\PatientController as AdminPatientController;
 use App\Http\Controllers\Admin\SpecialtyController as AdminSpecialtyController;
+use App\Http\Controllers\Doctor\HorarioController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\SpecialtyController;
@@ -43,4 +44,11 @@ Route::middleware(['auth','admin'])->group(function(){
     Route::resource('/pacientes',AdminPatientController::class);
 });
 
+Route::group(['middleware' => 'doctor'], function () {
+    Route::prefix('horario')
+    ->controller(HorarioController::class)
+    ->group(function(){
+        Route::get('/','edit')->name('horario.edit');
 
+    });
+});

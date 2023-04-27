@@ -32,7 +32,7 @@
         </li>
         @elseif (auth()->user()->role == 'Doctor')
             <li class="nav-item">
-                <a class="nav-link " href="">
+                <a class="nav-link " href="{{route('horario.edit')}}">
                     <i class="ni ni-calendar-grid-58 text-primary"></i> Gestionar de horarios
                 </a>
             </li>
