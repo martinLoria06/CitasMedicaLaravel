@@ -32,7 +32,7 @@ class DoctorController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
+        // dd($request->all());
         $rules = [
             'name'  => 'required|min:3',
             'email' => 'required|email',
@@ -55,13 +55,16 @@ class DoctorController extends Controller
 
         $this->validate($request, $rules, $messages);
 
-        User::create(
+        $user = User::create(
             $request->only('name','email','cedula','address','phone')
             + [
                 'role'=>'Doctor',
                 'password' => bcrypt($request->password)
             ]
         );
+
+        $user->specialty()->attach($request->specialties);
+        // $user->specialty()->attach($request->input('specialties'));
 
         $success = 'El médico se ha registrado correctamente';
 
@@ -82,7 +85,9 @@ class DoctorController extends Controller
     public function edit(string $id)
     {
         $doctor = User::doctors()->findOrFail($id);
-        return view('doctors.edit',compact('doctor'));
+        $specialties = Specialty::all();
+        $specialty_ids = $doctor->specialties()->pluck('specialties.id');
+        return view('doctors.edit',compact('doctor','specialties','specialty_ids'));
     }
 
     /**
@@ -121,6 +126,8 @@ class DoctorController extends Controller
 
         $doctor ->fill($data);
         $doctor->save();
+        $doctor->specialties()->sync($request->specialties);
+
 
         $success = 'La informacion del médico se ha actulizado correctamente';
 

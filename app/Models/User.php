@@ -37,8 +37,8 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    public function specialty(){
-        return $this->belongsToMany(Specialty::class);
+    public function specialties(){
+        return $this->belongsToMany(Specialty::class)->withTimestamps();
     }
 
     /**
