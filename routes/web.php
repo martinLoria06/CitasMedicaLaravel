@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\DoctorController as AdminDoctorController;
 use App\Http\Controllers\Admin\PatientController as AdminPatientController;
 use App\Http\Controllers\Admin\SpecialtyController as AdminSpecialtyController;
+use App\Http\Controllers\Api\HorarioController as ApiHorarioController;
 use App\Http\Controllers\Api\SpecialtyController as ApiSpecialtyController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\Doctor\HorarioController;
@@ -63,6 +64,7 @@ Route::middleware('auth')->group(function(){
 
     //JSON
     Route::get('/especialidades/{specialty}/medicos',[ApiSpecialtyController::class,'doctors'])->name('especialidades.doctors');
+    Route::get('/horario/horas',[ApiHorarioController::class,'hours'])->name('horarios.horas');
 });
 // Route::prefix('/reservarcitas')
 //     ->controller()
