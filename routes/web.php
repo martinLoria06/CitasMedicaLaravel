@@ -3,11 +3,13 @@
 use App\Http\Controllers\Admin\DoctorController as AdminDoctorController;
 use App\Http\Controllers\Admin\PatientController as AdminPatientController;
 use App\Http\Controllers\Admin\SpecialtyController as AdminSpecialtyController;
+use App\Http\Controllers\Api\SpecialtyController as ApiSpecialtyController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\Doctor\HorarioController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\SpecialtyController;
+use App\Models\Specialty;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -55,8 +57,13 @@ Route::group(['middleware' => 'doctor'], function () {
     });
 });
 
-Route::get('/reservarcitas', [AppointmentController::class ,'create'])->name('appoinmente.create');
-Route::get('/miscitas', [AppointmentController::class ,'store'])->name('micitas.store');
+Route::middleware('auth')->group(function(){
+    Route::get('/reservarcitas', [AppointmentController::class ,'create'])->name('appoinmente.create');
+    Route::get('/miscitas', [AppointmentController::class ,'store'])->name('micitas.store');
+
+    //JSON
+    Route::get('/especialidades/{specialty}/medicos',[ApiSpecialtyController::class,'doctors'])->name('especialidades.doctors');
+});
 // Route::prefix('/reservarcitas')
 //     ->controller()
 //     ->group(function(){

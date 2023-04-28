@@ -29,8 +29,9 @@
         <form action="{{route('pacientes.store')}}" method="POST">
             @csrf
             <div class="form-group">
-                <label for="name">Especialidad</label>
-                <select name="" id="" class="form-control">
+                <label for="specialty">Especialidad</label>
+                <select name="specialty_id" id="specialty" class="form-control">
+                    <option value="">Selecionar Especialidad</option>
                     @foreach ($specialties as $especialidad)
                         <option value="{{$especialidad->id}}">{{$especialidad->name}}</option>
                     @endforeach
@@ -38,8 +39,9 @@
             </div>
 
             <div class="form-group">
-                <label for="email">Médicos</label>
-                <select name="" id="" class="form-control"></select>
+                <label for="doctor">Médicos</label>
+                <select name="doctor_id" id="doctor" class="form-control">
+                </select>
             </div>
 
             <div class="form-group">
@@ -76,4 +78,27 @@
 
 @section('scripts')
     <script src="{{asset('js/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
-@endsection
+    <script>
+        let doctor;
+        $(function(){
+            const $specialty = $('#specialty');
+            $doctor = $('#doctor');
+            $specialty.change(()=> {
+                const specialtyId = $specialty.val();
+                console.log(specialtyId);
+                const url = `/especialidades/${specialtyId}/medicos`;
+                console.log(url);
+                $.getJSON(url, onDoctorsLoaded);
+            });
+        });
+
+         function onDoctorsLoaded(doctors){
+            // console.log(doctors);
+            let htmlOptions = '';
+            doctors.forEach(doctor => {
+                htmlOptions += `<option value="${doctor.id}">${doctor.name}</option>`;
+            });
+            $doctor.html(htmlOptions);
+        }
+    </script>
+    @endsection
