@@ -78,16 +78,40 @@
                         <div class="col">
                             <h4 class="m-3" id="titleMorning"></h4>
                             <div id="hoursMorning">
-                                <mark>
-                                    <small class="text-warning display-5">
-                                        Seleccionar un médico y una fecha, para ver las horas disponibles.
-                                    </small>
-                                </mark>
+                                @if ($intervals)
+                                    @foreach ($intervals['morning'] as $key => $interval)
+                                        <div class="custom-control custom-radio mb-3">
+                                            <input type="radio" id="intervalMorning{{$key}}" name="schedule_time" value="{{$interval['start']}}" class="custom-control-input">
+                                            <label class="custom-control-label" for="intervalMorning{{$key}}">{{$interval['start']}} - {{$interval['end']}}</label>
+                                        </div>
+                                    @endforeach
+                                @else
+                                    <mark>
+                                        <small class="text-warning display-5">
+                                            Seleccionar un médico y una fecha, para ver las horas disponibles.
+                                        </small>
+                                    </mark>
+                                @endif
                             </div>
                         </div>
                         <div class="col">
                             <h4 class="m-3" id="titleAfternoon"></h4>
-                            <div id="hoursAfternon"></div>
+                            <div id="hoursAfternon">
+                                @if ($intervals)
+                                    @foreach ($intervals['afternoon'] as $key => $interval)
+                                        <div class="custom-control custom-radio mb-3">
+                                            <input type="radio" id="intervalAfternoon{{$key}}" name="schedule_time" value="{{$interval['start']}}" class="custom-control-input">
+                                            <label class="custom-control-label" for="intervalAfternoon{{$key}}">{{$interval['start']}} - {{$interval['end']}}</label>
+                                        </div>
+                                    @endforeach
+                                @else
+                                    <mark>
+                                        <small class="text-warning display-5">
+                                            Seleccionar un médico y una fecha, para ver las horas disponibles.
+                                        </small>
+                                    </mark>
+                                @endif
+                            </div>
                         </div>
                     </div>
                 </div>

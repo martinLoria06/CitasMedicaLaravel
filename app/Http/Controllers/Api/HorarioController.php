@@ -4,65 +4,68 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\hoursRequest;
+use App\Interfaces\HorarioServiceInterface;
 use App\Models\Horarios;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class HorarioController extends Controller
 {
-    public function hours(hoursRequest $request)
+    public function hours(hoursRequest $request, HorarioServiceInterface $horarioServiceInterface )
     {
         $date = $request->date;
-        $dateCarbon = new Carbon($date);
-        $i = $dateCarbon->dayOfWeek;
-        $day = ($i == 0 ? 6 : $i - 1);
+        // $dateCarbon = new Carbon($date);
+        // $i = $dateCarbon->dayOfWeek;
+        // $day = ($i == 0 ? 6 : $i - 1);
         $doctorId = $request->doctor_id;
 
-        $horario = Horarios::where('active', true)
-            ->where('day', $day)
-            ->where('user_id', $doctorId)
-            ->first([
-                'morning_start',
-                'morning_end',
-                'afternoon_start',
-                'afternoon_end'
-            ]);
-        // dd($horario->afternoon_end);
+       return $horarioServiceInterface->getAvailableIntervals($date,$doctorId);
 
-        if (!$horario) {
-            return [];
-        }
+        // $horario = Horarios::where('active', true)
+        //     ->where('day', $day)
+        //     ->where('user_id', $doctorId)
+        //     ->first([
+        //         'morning_start',
+        //         'morning_end',
+        //         'afternoon_start',
+        //         'afternoon_end'
+        //     ]);
+        // // dd($horario->afternoon_end);
 
-        $morningIntervalos = $this->getIntervalos(
-            $horario->morning_start,
-            $horario->morning_end
-        );
+        // if (!$horario) {
+        //     return [];
+        // }
 
-        $afternoonIntervalos = $this->getIntervalos(
-            $horario->afternoon_start,
-            $horario->afternoon_end
-        );
+        // $morningIntervalos = $this->getIntervalos(
+        //     $horario->morning_start,
+        //     $horario->morning_end
+        // );
 
-        $data = [];
+        // $afternoonIntervalos = $this->getIntervalos(
+        //     $horario->afternoon_start,
+        //     $horario->afternoon_end
+        // );
 
-        $data['morning'] = $morningIntervalos;
-        $data['afternoon'] = $afternoonIntervalos;
-        return $data;
+        // $data = [];
+
+        // $data['morning'] = $morningIntervalos;
+        // $data['afternoon'] = $afternoonIntervalos;
+        // return $data;
     }
 
-    private function getIntervalos($start, $end)
-    {
-        $start = new Carbon($start);
-        $end = new Carbon($end);
+    // private function getIntervalos($start, $end)
+    // {
+    //     $start = new Carbon($start);
+    //     $end = new Carbon($end);
 
-        $intervalos = [];
-        while ($start < $end) {
-            $intervalo = [];
-            $intervalo['start'] = $start->format('g:i A');
-            $start->addMinutes(30);
-            $intervalo['end'] = $start->format('g:i A');
-            $intervalos[] = $intervalo;
-        }
-        return $intervalos;
-    }
+    //     $intervalos = [];
+    //     while ($start < $end) {
+    //         $intervalo = [];
+    //         $intervalo['start'] = $start->format('g:i A');
+    //         $start->addMinutes(30);
+    //         $intervalo['end'] = $start->format('g:i A');
+    //         $intervalos[] = $intervalo;
+    //     }
+    //     return $intervalos;
+    // }
 }
