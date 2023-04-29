@@ -16,6 +16,16 @@ class HorarioService implements HorarioServiceInterface
         $day = ($i == 0 ? 6 : $i - 1);
         return $day;
     }
+
+    public function isAvaliableIntervals($date,$doctorId, Carbon $start){
+        $exists = Appoinment::where('doctor_id', $doctorId)
+        ->where('scheduled_date', $date)
+        ->where('schedule_time', $start->format('H:i:s'))
+        ->exists();
+
+        return !$exists;
+    }
+
     public function getAvailableIntervals($date, $doctorId)
     {
         $horario = Horarios::where('active', true)
@@ -63,13 +73,16 @@ class HorarioService implements HorarioServiceInterface
         while ($start < $end) {
             $intervalo = [];
             $intervalo['start'] = $start->format('g:i A');
-            $exists = Appoinment::where('doctor_id', $doctorId)
-                ->where('scheduled_date', $date)
-                ->where('schedule_time', $start->format('H:i:s'))
-                ->exists();
+            // $exists = Appoinment::where('doctor_id', $doctorId)
+            //     ->where('scheduled_date', $date)
+            //     ->where('schedule_time', $start->format('H:i:s'))
+            //     ->exists();
+
+            $avalaible = $this->isAvaliableIntervals($date,$doctorId, $start);
+
             $start->addMinutes(30);
             $intervalo['end'] = $start->format('g:i A');
-            if (!$exists) {
+            if ($avalaible) {
                 $intervalos[] = $intervalo;
             }
         }
