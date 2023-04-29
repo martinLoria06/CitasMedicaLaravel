@@ -52,6 +52,7 @@
                             <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
                         </div>
                         <input class="form-control datepicker"
+                             id="date"
                              placeholder="Seleccionar Fecha"
                              type="text" value="{{date('Y-m-d')}}"
                              data-date-format="yyyy-mm-dd"
@@ -62,7 +63,18 @@
 
             <div class="form-group">
                 <label for="address">Hora de atención</label>
-                <input type="text" name="address" id="address" class="form-control" value="{{old('address')}}">
+                <div class="container">
+                    <div class="row">
+                        <div class="col">
+                            <h4 class="m-3" id="titleMorning"></h4>
+                            <div id="hoursMorning"></div>
+                        </div>
+                        <div class="col">
+                            <h4 class="m-3" id="titleAfternoon"></h4>
+                            <div id="hoursAfternon"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="form-group">
@@ -78,27 +90,7 @@
 
 @section('scripts')
     <script src="{{asset('js/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
-    <script>
-        let doctor;
-        $(function(){
-            const $specialty = $('#specialty');
-            $doctor = $('#doctor');
-            $specialty.change(()=> {
-                const specialtyId = $specialty.val();
-                console.log(specialtyId);
-                const url = `/especialidades/${specialtyId}/medicos`;
-                console.log(url);
-                $.getJSON(url, onDoctorsLoaded);
-            });
-        });
+    <script src="{{asset('/js/appoinments/create.js')}}">
 
-         function onDoctorsLoaded(doctors){
-            // console.log(doctors);
-            let htmlOptions = '';
-            doctors.forEach(doctor => {
-                htmlOptions += `<option value="${doctor.id}">${doctor.name}</option>`;
-            });
-            $doctor.html(htmlOptions);
-        }
     </script>
     @endsection

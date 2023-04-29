@@ -10,46 +10,57 @@ use Illuminate\Http\Request;
 
 class HorarioController extends Controller
 {
-    public function hours(hoursRequest $request){
+    public function hours(hoursRequest $request)
+    {
         $date = $request->date;
         $dateCarbon = new Carbon($date);
         $i = $dateCarbon->dayOfWeek;
-        $day = ($i == 0 ? 6 : $i-1 );
+        $day = ($i == 0 ? 6 : $i - 1);
         $doctorId = $request->doctor_id;
-        $horario = Horarios::where('active',true)
-                           ->where('day',$day)
-                           ->where('user_id',$doctorId)
-                           ->first([
-                                    'morning_start',
-                                    'morning_end',
-                                    'afternoon_start',
-                                    'afternoon_end'
-                                ]);
 
-       if(!$horario){
+        $horario = Horarios::where('active', true)
+            ->where('day', $day)
+            ->where('user_id', $doctorId)
+            ->first([
+                'morning_start',
+                'morning_end',
+                'afternoon_start',
+                'afternoon_end'
+            ]);
+        // dd($horario->afternoon_end);
+
+        if (!$horario) {
             return [];
-       }
+        }
 
-       $morningIntervalos = $this->getIntervalos($horario->morning_start, $horario->morning_end);
-       $afternonIntervalos = $this->getIntervalos($horario->afternoon_start, $horario->afternoon_end);
+        $morningIntervalos = $this->getIntervalos(
+            $horario->morning_start,
+            $horario->morning_end
+        );
 
-       $data = [];
-       $data['morning'] = $morningIntervalos;
-       $data['afternon'] = $afternonIntervalos;
-       return $data;
+        $afternoonIntervalos = $this->getIntervalos(
+            $horario->afternoon_start,
+            $horario->afternoon_end
+        );
 
+        $data = [];
+
+        $data['morning'] = $morningIntervalos;
+        $data['afternoon'] = $afternoonIntervalos;
+        return $data;
     }
 
-    private function getIntervalos($start,$end){
+    private function getIntervalos($start, $end)
+    {
         $start = new Carbon($start);
         $end = new Carbon($end);
 
         $intervalos = [];
-        while($start < $end){
+        while ($start < $end) {
             $intervalo = [];
             $intervalo['start'] = $start->format('g:i A');
             $start->addMinutes(30);
-            $intervalo['end'] = $end->format('g:i A');
+            $intervalo['end'] = $start->format('g:i A');
             $intervalos[] = $intervalo;
         }
         return $intervalos;
