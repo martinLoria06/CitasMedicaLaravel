@@ -34,7 +34,8 @@
                     <select name="specialty_id" id="specialty" class="form-control">
                         <option value="">Selecionar Especialidad</option>
                         @foreach ($specialties as $especialidad)
-                            <option value="{{$especialidad->id}}">{{$especialidad->name}}</option>
+                            <option value="{{$especialidad->id}}"
+                                @if(old('specialty_id') == $especialidad->id) selected @endif>{{$especialidad->name}}</option>
                         @endforeach
                     </select>
                 </div>
@@ -42,6 +43,10 @@
                 <div class="form-group col-md-6">
                     <label for="doctor">Médicos</label>
                     <select name="doctor_id" id="doctor" class="form-control" required>
+                        @foreach ($doctors as $doctor)
+                            <option value="{{$doctor->id}}"
+                                @if(old('doctor_id') == $doctor->id) selected @endif>{{$doctor->name}}</option>
+                         @endforeach
                     </select>
                 </div>
             </div>
@@ -59,7 +64,7 @@
                              id="date"
                              name="scheduled_date"
                              placeholder="Seleccionar Fecha"
-                             type="text" value="{{date('Y-m-d')}}"
+                             type="date" value="{{ old('scheduled_date'), date('Y-m-d')}}"
                              data-date-format="yyyy-mm-dd"
                              data-date-start-date="{{date('Y-m-d')}}" data-date-end-date="+30d">
                     </div>
@@ -91,15 +96,18 @@
             <div class="form-group">
                 <label>Tipo de consulta</label>
                 <div class="custom-control custom-radio mt-3 mb-3">
-                    <input type="radio" id="type1" name="type" class="custom-control-input" value="Consulta">
+                    <input type="radio" id="type1" name="type" class="custom-control-input"
+                    @if (old('type') == "Consulta") checked @endif value="Consulta">
                     <label class="custom-control-label" for="type1">Consulta</label>
                 </div>
                 <div class="custom-control custom-radio mb-3">
-                    <input type="radio" id="type2" name="type" class="custom-control-input" value="Examen">
+                    <input type="radio" id="type2" name="type" class="custom-control-input"
+                    @if (old('type') == "Examen") checked @endif value="Examen">
                     <label class="custom-control-label" for="type2">Examen</label>
                 </div>
                 <div class="custom-control custom-radio mb-5">
-                    <input type="radio" id="type3" name="type" class="custom-control-input" value="Operación">
+                    <input type="radio" id="type3" name="type" class="custom-control-input"
+                    @if (old('type') == "Operación") checked @endif value="Operación">
                     <label class="custom-control-label" for="type3">Operación</label>
                 </div>
             </div>

@@ -13,7 +13,15 @@ class AppointmentController extends Controller
     public function create()
     {
         $specialties = Specialty::all();
-        return view('appoinments.create', compact('specialties'));
+        $specialtyId = old('specialty_id');
+        if ($specialtyId) {
+            $specialty = Specialty::find($specialtyId);
+            $doctors = $specialty->users;
+        } else {
+            $doctors = collect();
+        }
+
+        return view('appoinments.create', compact('specialties','doctors'));
     }
 
     public function store(AppoimentRequest $request)
@@ -33,6 +41,6 @@ class AppointmentController extends Controller
 
         Appoinment::create($data);
 
-        return back()->with('success','La cita se ha realizado correctamente');
+        return back()->with('success', 'La cita se ha realizado correctamente');
     }
 }
