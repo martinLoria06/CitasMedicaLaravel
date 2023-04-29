@@ -79,6 +79,7 @@
                             <h4 class="m-3" id="titleMorning"></h4>
                             <div id="hoursMorning">
                                 @if ($intervals)
+                                <h4 class="m-3">En la mañana</h4>
                                     @foreach ($intervals['morning'] as $key => $interval)
                                         <div class="custom-control custom-radio mb-3">
                                             <input type="radio" id="intervalMorning{{$key}}" name="schedule_time" value="{{$interval['start']}}" class="custom-control-input">
@@ -98,6 +99,7 @@
                             <h4 class="m-3" id="titleAfternoon"></h4>
                             <div id="hoursAfternon">
                                 @if ($intervals)
+                                <h4 class="m-3">En la tarde</h4>
                                     @foreach ($intervals['afternoon'] as $key => $interval)
                                         <div class="custom-control custom-radio mb-3">
                                             <input type="radio" id="intervalAfternoon{{$key}}" name="schedule_time" value="{{$interval['start']}}" class="custom-control-input">

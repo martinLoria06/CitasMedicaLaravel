@@ -3,12 +3,14 @@
 namespace App\Services;
 
 use App\Interfaces\HorarioServiceInterface;
+use App\Models\Appoinment;
 use App\Models\Horarios;
 use Carbon\Carbon;
 
 class HorarioService implements HorarioServiceInterface
 {
-    private function getDayFromDate($date){
+    private function getDayFromDate($date)
+    {
         $dateCarbon = new Carbon($date);
         $i = $dateCarbon->dayOfWeek;
         $day = ($i == 0 ? 6 : $i - 1);
@@ -33,12 +35,16 @@ class HorarioService implements HorarioServiceInterface
 
         $morningIntervalos = $this->getIntervalos(
             $horario->morning_start,
-            $horario->morning_end
+            $horario->morning_end,
+            $doctorId,
+            $date
         );
 
         $afternoonIntervalos = $this->getIntervalos(
             $horario->afternoon_start,
-            $horario->afternoon_end
+            $horario->afternoon_end,
+            $doctorId,
+            $date
         );
 
         $data = [];
@@ -48,7 +54,7 @@ class HorarioService implements HorarioServiceInterface
         return $data;
     }
 
-    private function getIntervalos($start, $end)
+    private function getIntervalos($start, $end, $doctorId, $date)
     {
         $start = new Carbon($start);
         $end = new Carbon($end);
@@ -57,9 +63,15 @@ class HorarioService implements HorarioServiceInterface
         while ($start < $end) {
             $intervalo = [];
             $intervalo['start'] = $start->format('g:i A');
+            $exists = Appoinment::where('doctor_id', $doctorId)
+                ->where('scheduled_date', $date)
+                ->where('schedule_time', $start->format('H:i:s'))
+                ->exists();
             $start->addMinutes(30);
             $intervalo['end'] = $start->format('g:i A');
-            $intervalos[] = $intervalo;
+            if (!$exists) {
+                $intervalos[] = $intervalo;
+            }
         }
         return $intervalos;
     }
