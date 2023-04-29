@@ -60,7 +60,8 @@ Route::group(['middleware' => 'doctor'], function () {
 
 Route::middleware('auth')->group(function(){
     Route::get('/reservarcitas', [AppointmentController::class ,'create'])->name('appoinmente.create');
-    Route::get('/miscitas', [AppointmentController::class ,'store'])->name('micitas.store');
+    Route::post('/reservarcitas', [AppointmentController::class ,'store'])->name('reservarcita.store');
+    Route::post('/miscitas', [AppointmentController::class ,'index'])->name('micitas.store');
 
     //JSON
     Route::get('/especialidades/{specialty}/medicos',[ApiSpecialtyController::class,'doctors'])->name('especialidades.doctors');
