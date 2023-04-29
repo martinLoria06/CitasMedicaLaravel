@@ -53,7 +53,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link " href="{{route('micitas.store')}}">
+                <a class="nav-link " href="{{route('miscitas.index')}}">
                     <i class="fas fa-clock text-info"></i> Mis citas
                 </a>
             </li>

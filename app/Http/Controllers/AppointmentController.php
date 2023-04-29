@@ -12,6 +12,12 @@ use Illuminate\Support\Facades\Validator;
 
 class AppointmentController extends Controller
 {
+
+    public function index(){
+        $appointments = Appoinment::all();
+        return view('appoinments.index',compact('appointments'));
+    }
+
     public function create(HorarioServiceInterface $horarioServiceInterface)
     {
         $specialties = Specialty::all();

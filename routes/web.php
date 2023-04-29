@@ -11,6 +11,7 @@ use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\SpecialtyController;
 use App\Models\Specialty;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -62,7 +63,7 @@ Route::group(['middleware' => 'doctor'], function () {
 Route::middleware('auth')->group(function(){
     Route::get('/reservarcitas', [AppointmentController::class ,'create'])->name('appoinmente.create');
     Route::post('/reservarcitas', [AppointmentController::class ,'store'])->name('reservarcita.store');
-    Route::post('/miscitas', [AppointmentController::class ,'index'])->name('micitas.store');
+    Route::get('/miscitas', [AppointmentController::class ,'index'])->name('miscitas.index');
 
     //JSON
     Route::get('/especialidades/{specialty}/medicos',[ApiSpecialtyController::class,'doctors'])->name('especialidades.doctors');
