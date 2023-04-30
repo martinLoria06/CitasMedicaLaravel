@@ -64,6 +64,8 @@ Route::middleware('auth')->group(function(){
     Route::get('/reservarcitas', [AppointmentController::class ,'create'])->name('appoinmente.create');
     Route::post('/reservarcitas', [AppointmentController::class ,'store'])->name('reservarcita.store');
     Route::get('/miscitas', [AppointmentController::class ,'index'])->name('miscitas.index');
+    Route::post('/miscitas/{appointment}/cancel', [AppointmentController::class ,'cancelar'])->name('miscitas.cancelar');
+    Route::get('/miscitas/{appointment}/cancel', [AppointmentController::class ,'formCancel'])->name('miscitas.formCancel');
 
     //JSON
     Route::get('/especialidades/{specialty}/medicos',[ApiSpecialtyController::class,'doctors'])->name('especialidades.doctors');

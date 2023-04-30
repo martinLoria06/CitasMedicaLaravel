@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\AppoimentRequest;
 use App\Interfaces\HorarioServiceInterface;
 use App\Models\Appoinment;
+use App\Models\CancelAppintment;
 use App\Models\Specialty;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -104,5 +105,26 @@ class AppointmentController extends Controller
         Appoinment::create($data);
 
         return back()->with('success', 'La cita se ha realizado correctamente');
+    }
+
+    public function cancelar (Appoinment $appointment, Request $request) {
+        if ($request->has('justificacion')) {
+            $cancelation = new CancelAppintment();
+            $cancelation->justificacion = $request->justificacion;
+            $cancelation->cancelled_by = auth()->id();
+
+            $appointment->cancellation()->save($cancelation);
+        }
+        $appointment->status = "Cancelada";
+        $appointment->save();
+        return redirect()->route('miscitas.index')->with('success','La cita fue cancelada correcatmente');
+    }
+
+    public function formCancel(Appoinment $appointment) {
+        if($appointment->status == 'Confirmada') {
+            return view('appoinments.cancel',compact('appointment'));
+        }
+
+        return redirect()->route('miscitas.index');
     }
 }

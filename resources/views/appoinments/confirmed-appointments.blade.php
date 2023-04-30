@@ -39,12 +39,7 @@
                       {{$cita->status}}
                   </td>
                   <td>
-                      <form action="{{route('miscitas.index',[$cita->id])}}" method="POST">
-                          @csrf
-                          @method('DELETE')
-
-                      <button type="submit" class="btn btn-sm btn-danger">Cancelar</button>
-                  </form>
+                     <a href="{{route('miscitas.formCancel',[$cita->id])}}" class="btn btn-sm btn-danger">Cancelar</a>
                   </td>
             </tr>
           @endforeach

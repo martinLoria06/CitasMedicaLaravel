@@ -36,10 +36,8 @@
                   </td>
 
                   <td>
-                      <form action="{{route('miscitas.index',[$cita->id])}}" method="POST">
+                      <form action="{{route('miscitas.cancelar',[$cita->id])}}" method="POST">
                           @csrf
-                          @method('DELETE')
-
                       <button type="submit" class="btn btn-sm btn-danger">Cancelar</button>
                   </form>
                   </td>
