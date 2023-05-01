@@ -10,6 +10,7 @@ use App\Http\Controllers\Doctor\HorarioController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\SpecialtyController;
+use App\Models\Appoinment;
 use App\Models\Specialty;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -64,8 +65,9 @@ Route::middleware('auth')->group(function(){
     Route::get('/reservarcitas', [AppointmentController::class ,'create'])->name('appoinmente.create');
     Route::post('/reservarcitas', [AppointmentController::class ,'store'])->name('reservarcita.store');
     Route::get('/miscitas', [AppointmentController::class ,'index'])->name('miscitas.index');
-    Route::post('/miscitas/{appointment}/cancel', [AppointmentController::class ,'cancelar'])->name('miscitas.cancelar');
+    Route::get('/miscitas/{appointment}', [AppointmentController::class ,'show'])->name('miscitas.show');
     Route::get('/miscitas/{appointment}/cancel', [AppointmentController::class ,'formCancel'])->name('miscitas.formCancel');
+    Route::post('/miscitas/{appointment}/cancel', [AppointmentController::class ,'cancelar'])->name('miscitas.cancelar');
 
     //JSON
     Route::get('/especialidades/{specialty}/medicos',[ApiSpecialtyController::class,'doctors'])->name('especialidades.doctors');

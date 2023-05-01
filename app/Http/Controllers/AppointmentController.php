@@ -111,7 +111,7 @@ class AppointmentController extends Controller
         if ($request->has('justificacion')) {
             $cancelation = new CancelAppintment();
             $cancelation->justificacion = $request->justificacion;
-            $cancelation->cancelled_by = auth()->id();
+            $cancelation->cancelled_by_id = auth()->id();
 
             $appointment->cancellation()->save($cancelation);
         }
@@ -126,5 +126,10 @@ class AppointmentController extends Controller
         }
 
         return redirect()->route('miscitas.index');
+    }
+
+    public function show(Appoinment $appointment) {
+
+        return view('appoinments.show',compact('appointment'));
     }
 }

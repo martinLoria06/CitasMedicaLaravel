@@ -31,11 +31,12 @@ class Appoinment extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function cancellation(){
+        return $this->hasOne(CancelAppintment::class);
+    }
+
     public function getScheduleTime12Attribute(){
         return(new Carbon($this->schedule_time))->format('g:i A');
     }
 
-    public function cancellation() {
-        return $this->hasOne(CancelAppintment::class);
-    }
 }
