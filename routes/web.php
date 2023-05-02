@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\chartController;
 use App\Http\Controllers\Admin\DoctorController as AdminDoctorController;
 use App\Http\Controllers\Admin\PatientController as AdminPatientController;
 use App\Http\Controllers\Admin\SpecialtyController as AdminSpecialtyController;
@@ -49,6 +50,8 @@ Route::middleware(['auth','admin'])->group(function(){
 
     //Rutas de Pacientes
     Route::resource('/pacientes',AdminPatientController::class);
+    //Rutas Reportes
+    Route::get('/reportes/citas/line',[chartController::class, 'appointments'])->name('graficas.appointments');
 });
 
 Route::group(['middleware' => 'doctor'], function () {

@@ -27,7 +27,7 @@
     <!-- Navigation -->
     <ul class="navbar-nav mb-md-3">
         <li class="nav-item">
-        <a class="nav-link" href="#">
+        <a class="nav-link" href="{{route('graficas.appointments')}}">
             <i class="ni ni-books text-default"></i> Citas
         </a>
         </li>
