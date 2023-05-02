@@ -41,7 +41,7 @@ class chartController extends Controller
         $doctors = User::doctors()
             ->select('name')
             ->withCount(['attendedAppoinments','cancellAppoinments'])
-            ->orderBy('cancell_appoinments_count','desc')
+            ->orderBy('attended_appoinments_count','desc')
             ->take(5)
             ->get();
             // ->toArray();
