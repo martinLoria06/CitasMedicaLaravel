@@ -48,12 +48,12 @@
           </div>
           <!-- Navbar items -->
           <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
+            {{-- <li class="nav-item">
               <a class="nav-link nav-link-icon" href="{{route('register')}}">
                 <i class="ni ni-circle-08"></i>
                 <span class="nav-link-inner--text">Registrate</span>
               </a>
-            </li>
+            </li> --}}
             <li class="nav-item">
               <a class="nav-link nav-link-icon" href="{{route('login')}}">
                 <i class="ni ni-key-25"></i>

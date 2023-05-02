@@ -41,13 +41,13 @@
         <div class="card">
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="mis-citas" role="tabpanel">
-                    @include('appoinments.confirmed-appointments')
+                    @include('appoinments.tables.confirmed-appointments')
                 </div>
                 <div class="tab-pane fade" id="citas-pendientes" role="tabpanel">
-                    @include('appoinments.pending-appointments')
+                    @include('appoinments.tables.pending-appointments')
                 </div>
                 <div class="tab-pane fade" id="historial" role="tabpanel">
-                    @include('appoinments.old-appoinments')
+                    @include('appoinments.tables.old-appoinments')
                 </div>
             </div>
         </div>

@@ -125,7 +125,7 @@ class AppointmentController extends Controller
 
         Appoinment::create($data);
 
-        return back()->with('success', 'La cita se ha realizado correctamente');
+        return redirect()->route('miscitas.index')->with('success', 'La cita se ha realizado correctamente');
     }
 
     public function cancelar(Appoinment $appointment, Request $request)
