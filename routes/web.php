@@ -52,6 +52,8 @@ Route::middleware(['auth','admin'])->group(function(){
     Route::resource('/pacientes',AdminPatientController::class);
     //Rutas Reportes
     Route::get('/reportes/citas/line',[chartController::class, 'appointments'])->name('graficas.appointments');
+    Route::get('/reportes/doctors/column',[chartController::class, 'doctors'])->name('graficas.doctor');
+    Route::get('/reportes/doctors/column/data',[chartController::class, 'doctorsJson'])->name('graficas.doctorJson');
 });
 
 Route::group(['middleware' => 'doctor'], function () {

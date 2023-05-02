@@ -32,7 +32,7 @@
         </a>
         </li>
         <li class="nav-item">
-        <a class="nav-link" href="#">
+        <a class="nav-link" href="{{route('graficas.doctor')}}">
             <i class="ni ni-chart-bar-32 text-warning"></i> Desempeño Médico
         </a>
         </li>
