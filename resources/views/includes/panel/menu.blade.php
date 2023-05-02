@@ -30,6 +30,11 @@
             <i class="fas fa-bed text-warning"></i> Pacientes
         </a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link " href="{{route('miscitas.index')}}">
+                <i class="fas fa-clock text-info"></i> Citas médicas
+            </a>
+        </li>
         @elseif (auth()->user()->role == 'Doctor')
             <li class="nav-item">
                 <a class="nav-link " href="{{route('horario.edit')}}">

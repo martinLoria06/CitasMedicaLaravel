@@ -46,7 +46,10 @@
                   </td>
 
                   <td>
-                    @if ($role == 'Doctor')
+                    @if ($role == 'admin')
+                    <a href="{{route('miscitas.show',[$cita->id])}}" class="btn btn-sm btn-info"><i class="ni far fa-eye"></i></a>
+                    @endif
+                    @if ($role == 'Doctor'||$role == 'admin')
                         <form action="{{route('miscitas.confirm',[$cita->id])}}" method="POST" class="d-inline-block">
                             @csrf
                             <button type="submit" class="btn btn-sm btn-success" title="Confirmar cita"><i class="ni ni-check-bold"></i></button>

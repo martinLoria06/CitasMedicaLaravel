@@ -18,7 +18,12 @@ class AppointmentController extends Controller
     {
 
         $role = auth()->user()->role;
-        if ($role == 'Doctor') {
+        if ($role == 'admin') {
+            // Admin
+            $confirmedAppoinments = Appoinment::all()->where('status', 'Confirmada');
+            $pendingAppointments = Appoinment::all()->where('status', 'Reservada');
+            $oldAppointments = Appoinment::all()->whereIn('status', ['Atendida', 'Cancelada']);
+        } elseif ($role == 'Doctor') {
             // Doctor
             $confirmedAppoinments = Appoinment::all()->where('status', 'Confirmada')
                 ->where('doctor_id', auth()->id());
@@ -149,6 +154,6 @@ class AppointmentController extends Controller
     public function show(Appoinment $appointment)
     {
         $role = auth()->user()->role;
-        return view('appoinments.show', compact('appointment','role'));
+        return view('appoinments.show', compact('appointment', 'role'));
     }
 }

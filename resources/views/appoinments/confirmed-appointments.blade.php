@@ -51,6 +51,9 @@
                       {{$cita->status}}
                   </td>
                   <td>
+                    @if ($role == 'admin')
+                    <a href="{{route('miscitas.show',[$cita->id])}}" class="btn btn-sm btn-info">Ver cita</a>
+                    @endif
                      <a href="{{route('miscitas.formCancel',[$cita->id])}}" class="btn btn-sm btn-danger">Cancelar</a>
                   </td>
             </tr>
