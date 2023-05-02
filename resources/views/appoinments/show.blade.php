@@ -23,9 +23,15 @@
             <dd>
                 <strong>Hora de atencion: </strong>{{ $appointment->Schedule_Time_12 }}
             </dd>
+            @if ($role == 'Paciente')
             <dd>
                 <strong>Doctor : </strong>{{ $appointment->doctor->name }}
             </dd>
+            @elseif ($role == 'Doctor')
+            <dd>
+                <strong>Paciente : </strong>{{ $appointment->patient->name }}
+            </dd>
+            @endif
             <dd>
                 <strong>Especialidad : </strong>{{ $appointment->specialty->name }}
             </dd>

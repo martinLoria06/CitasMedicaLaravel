@@ -6,7 +6,12 @@
         <tr>
           <th scope="col">Description</th>
           <th scope="col">Especialidad</th>
+          @if ($role == 'Paciente')
           <th scope="col">Medico</th>
+          @elseif($role == 'Doctor')
+          <th scope="col">Paciente</th>
+          @endif
+
           <th scope="col">Fecha</th>
           <th scope="col">Hora</th>
           <th scope="col">Tipo</th>
@@ -23,9 +28,16 @@
                   <td>
                       {{$cita->specialty->name}}
                   </td>
+                  @if ($role == 'Paciente')
                   <td>
-                      {{$cita->doctor->name}}
+                    {{$cita->doctor->name}}
                   </td>
+                  @elseif ($role == 'Doctor')
+                  <td>
+                    {{$cita->patient->name}}
+                  </td>
+                  @endif
+
                   <td>
                       {{$cita->scheduled_date}}
                   </td>

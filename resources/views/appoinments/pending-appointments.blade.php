@@ -6,7 +6,11 @@
         <tr>
           <th scope="col">Description</th>
           <th scope="col">Especialidad</th>
+          @if ($role == 'Paciente')
           <th scope="col">Medico</th>
+          @elseif($role == 'Doctor')
+          <th scope="col">Paciente</th>
+          @endif
           <th scope="col">Fecha</th>
           <th scope="col">Hora</th>
           <th scope="col">Tipo</th>
@@ -22,9 +26,15 @@
                   <td>
                       {{$cita->specialty->name}}
                   </td>
+                  @if ($role == 'Paciente')
                   <td>
-                      {{$cita->doctor->name}}
+                    {{$cita->doctor->name}}
                   </td>
+                  @elseif ($role == 'Doctor')
+                  <td>
+                    {{$cita->patient->name}}
+                  </td>
+                  @endif
                   <td>
                       {{$cita->scheduled_date}}
                   </td>
@@ -36,10 +46,16 @@
                   </td>
 
                   <td>
-                      <form action="{{route('miscitas.cancelar',[$cita->id])}}" method="POST">
-                          @csrf
-                      <button type="submit" class="btn btn-sm btn-danger">Cancelar</button>
-                  </form>
+                    @if ($role == 'Doctor')
+                        <form action="{{route('miscitas.confirm',[$cita->id])}}" method="POST" class="d-inline-block">
+                            @csrf
+                            <button type="submit" class="btn btn-sm btn-success" title="Confirmar cita"><i class="ni ni-check-bold"></i></button>
+                        </form>
+                    @endif
+                      <form action="{{route('miscitas.cancelar',[$cita->id])}}" method="POST" class="d-inline-block">
+                            @csrf
+                            <button type="submit" class="btn btn-sm btn-danger" title="Cancelar cita"><i class="ni ni-fat-delete"></i></button>
+                      </form>
                   </td>
             </tr>
           @endforeach
