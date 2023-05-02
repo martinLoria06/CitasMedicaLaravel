@@ -67,6 +67,7 @@ Route::middleware('auth')->group(function(){
     Route::get('/miscitas', [AppointmentController::class ,'index'])->name('miscitas.index');
     Route::get('/miscitas/{appointment}', [AppointmentController::class ,'show'])->name('miscitas.show');
     Route::get('/miscitas/{appointment}/cancel', [AppointmentController::class ,'formCancel'])->name('miscitas.formCancel');
+    Route::post('/miscitas/{appointment}/confirm', [AppointmentController::class ,'confirm'])->name('miscitas.confirm');
     Route::post('/miscitas/{appointment}/cancel', [AppointmentController::class ,'cancelar'])->name('miscitas.cancelar');
 
     //JSON

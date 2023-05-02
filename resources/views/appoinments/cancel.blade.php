@@ -21,7 +21,20 @@
                 {{session('success')}}
             </div>
         @endif
-        <p>Se cancelara tu cita reservada con el medico <b>{{$appointment->doctor->name}}</b> (especialidad <b>{{$appointment->specialty->name}}</b>) para el dia <b>{{$appointment->scheduled_date}}</b></p>
+        @if ($role == 'Paciente')
+        <p>Se cancelará tu cita reservada con el medico <b>{{$appointment->doctor->name}}</b> (especialidad <b>{{$appointment->specialty->name}}</b>) para el dia <b>{{$appointment->scheduled_date}}</b></p>
+        @elseif ($role == 'Doctor')
+        <p>Se cancelará la cita medica del paciente <b>{{$appointment->patient->name}}</b>
+            (especialidad <b>{{$appointment->specialty->name}}</b>)
+            para el dia <b>{{$appointment->scheduled_date}}</b>
+            , la hora <b>{{$appointment->Schedule_Time_12}}</b></p>
+         @else
+         <p>Se cancelará la cita medica del paciente <b>{{$appointment->patient->name}}</b>
+            que sera atendido por el Doctor <b>{{$appointment->doctor->name}}</b>
+            (especialidad <b>{{$appointment->specialty->name}}</b>)
+            para el dia <b>{{$appointment->scheduled_date}}</b>
+            , la hora <b>{{$appointment->Schedule_Time_12}}</b></p>
+        @endif
             <form action="{{route('miscitas.cancelar',[$appointment->id])}}" method="POST">
                 @csrf
                 <div class="form-group">
